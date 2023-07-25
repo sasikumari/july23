@@ -1,35 +1,81 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import axios from 'axios';
 
-function App() {
+const RegistrationForm = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    balance: 0
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('/api/register', formData);
+      console.log(response.data); // Handle successful registration response
+    } catch (error) {
+      console.error('Error registering user:', error);
+    }
+  };
+
   return (
-    <div>
-      <h1> HHIII </h1>
-       
-    </div>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="balance">Balance</label>
+        <input
+          type="number"
+          id="balance"
+          name="balance"
+          value={formData.balance}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <button type="submit">Register</button>
+    </form>
   );
-}
+};
 
-export default App;
-import { useState } from "react";
-import axios from "axios";
-
-
-
-function App() {
-
-  const [data, setstate] = useState("");
- 
-  const handleClick = async (e) => {
-
-    const response = await axios.get("http://localhost:4000/api/getdata")
-    setstate(response.data)
-  }
-  return (
-    <div>
-       <button onClick={this.handleClick}>Increment</button>
-  </div>
-  );
-}
-
-export default App;
+export default RegistrationForm;
