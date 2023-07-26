@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -21,7 +22,7 @@ const RegistrationForm = () => {
     e.preventDefault();
     try {
       const response = await axios.post('/api/register', formData);
-      console.log(response.data); // Handle successful registration response
+      console.log(response.data); 
     } catch (error) {
       console.error('Error registering user:', error);
     }
